@@ -1,0 +1,230 @@
+@use 'variables';
+@use 'initial';
+@use 'mixins';
+
+.main-container {
+    width: 375px;
+    margin: auto;
+
+    &__background-section {
+        background-image: url(../images/bg-main-mobile.png);
+        background-repeat: no-repeat;
+        height: 240px;
+        position: relative; //this was added so .card can be relative to this section and not to other container.
+    }
+
+    &__form-section {
+        //this block iis to give first some styles to the big containers
+        padding: 90px 24px 45px;
+    }
+
+    @media (min-width: 1440px) {
+        //main-container will grow when it reaches min-width of 1440px
+        width: 1440px;
+        display: flex; //this is to have the 2 containers next to each other inside the main-section when it hits 1440px of width
+
+        &__background-section {
+            background-image: url(../images/bg-main-desktop.png);
+            width: 900px;
+            height: 900px;
+        }
+    }
+}
+
+
+.card {
+    //this is calling the mixin with the name 'card'
+    @include mixins.card('../images/bg-card-front.png'); //this is a parameter
+    @include mixins.card-position(126px, 18px, 187px, 167px); //this is the value of the parameters I created in mixins
+    z-index: 1; //this position the back card nehind the front card.
+    letter-spacing: 2px;
+
+    &__logo {
+        width: 55px;
+        margin-bottom: 30px
+    }
+
+    &__number {
+        margin-bottom: 15px;
+    }
+
+    &__details {
+        display: flex; //this display flex is to put card__details and card__number next to each other. They have their own container inside card.
+        font-size: 0.6em;
+        justify-content: space-between;
+        text-transform: uppercase;
+    }
+
+    @media (min-width: 1440px) {
+
+        //Here is the media query
+        &__logo {
+            width: 86px; //I made the logo a bit bigger
+            margin-bottom: 55px // I added more space in the bottom
+        }
+
+        &__number {
+            font-size: 1.6em; // made the font size a bit bigger
+            margin-bottom: 25px; // I added more space in the bottom
+        }
+
+        &__details {
+            font-size: 0.8em;
+        }
+    }
+}
+
+
+
+
+.card-back {
+    @include mixins.card('../images/bg-card-back.png'); //this is the other images behind the front one. This was possible by creating a $url parameter in the file mixins.
+    @include mixins.card-position(30px, 75px, 468px, 257px);
+    letter-spacing: 2px;
+
+    &__cvc {
+        // I am working with the zeros on the back card.
+        font-size: 0.7em;
+        margin-top: 50px;
+        text-align: right;
+        padding-right: 10px;
+
+        @media (min-width: 1440px) {
+            //this media query is inside the __cvc bc I am working with __cvc specifically. Otherwise, will be outside.
+            font-size: 1em;
+            margin-top: 80px;
+            padding-right: 30px;
+        }
+    }
+
+}
+
+.form {
+    //display: none;
+
+    &__label {
+        text-transform: uppercase;
+        font-size: 0.65em;
+        letter-spacing: 2px;
+        display: block; // I added this line to display every element as blocks so the label and the input could be going down and not next to each other.
+        margin-bottom: 8px;
+        color: variables.$Very-dark-violet;
+        font-weight: bold;
+    }
+
+    &__input {
+        width: 100%;
+        height: 40px;
+        margin-bottom: 18px;
+        border-radius: 4px;
+        font-family: variables.$font;
+        border: 1px solid variables.$Light-grayish-violet;
+        padding-left: 10px; //I pushed the text inside the input to the right
+        font-size: 1em;
+        outline: none; //I deleted the black outline when clicking any input.
+
+        &::placeholder {
+            // changed the color of the placeholder.
+            color: variables.$Light-grayish-violet;
+        }
+    }
+
+    &__date-cvc {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 16px; // I added the 0 so I can have just the gap in between.
+    }
+
+    &__date {
+        display: flex;
+        gap: 10px;
+    }
+
+    &__submit {
+        background-color: variables.$Very-dark-violet;
+        color: variables.$Light-grayish-violet;
+        width: 100%;
+        height: 50px;
+        border-radius: 8px;
+        font-size: 1em;
+        letter-spacing: 1px;
+        font-family: variables.$font;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        //this media query applies to the .form.
+        margin-top: 180px;
+        width: 385px;
+
+        &__input {
+            // by adding this, the media query applies the following just to form__input to aall of them.
+            margin-bottom: 40px;
+        }
+
+    }
+}
+
+.error {
+    color: variables.$Red;
+    margin: -10px 0 18px;
+    font-size: 0.6em;
+}
+
+.form__error-container {
+    display: flex;
+    gap: 5px;
+
+}
+
+.form__error-container div {
+    width: 100px;
+    text-align: center;
+}
+
+.thanks-section {
+    width: 375px;
+    margin: auto;
+    margin-bottom: 60px;
+
+    &__img {
+        display: block;
+        margin: auto;
+        margin-bottom: 30px;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 400;
+        letter-spacing: 4px;
+        color: variables.$Very-dark-violet;
+        margin-bottom: 24px;
+    }
+
+    &__text {
+        text-align: center;
+        color: variables.$Dark-grayish-violet;
+        font-size: 1.1em;
+        margin-bottom: 24px;
+    }
+
+    &__button {
+        @extend .form__submit;
+    }
+    @media (min-width: 1440px){
+        margin-top: 180px;
+    }
+}
+
+.attribution {
+    font-size: 14px;
+    text-align: center;
+}
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
