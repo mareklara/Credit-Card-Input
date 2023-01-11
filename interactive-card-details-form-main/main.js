@@ -23,7 +23,7 @@ let cvcCard = document.querySelector('.card-back__cvc');
 let cvcInput = document.querySelector('#cardCvc');
 let cvcErrorDiv = document.querySelector('.form__input-cvc--error');
 
-// Ingreso dinamico del nombre
+// input name dynamically 
 nameInput.addEventListener('input', ()=>{
     if(nameInput.value == ''){
         nameCard.innerText = 'JANE APPLESEED'
@@ -32,7 +32,7 @@ nameInput.addEventListener('input', ()=>{
     }
 });
 
-//Ingreso dinamico del numero
+//input number dynamically 
 numberInput.addEventListener('input', ()=>{
 
     
@@ -42,15 +42,15 @@ numberInput.addEventListener('input', ()=>{
     if(regExp.test(numberInput.value)){
         showError(numberInput, numberErrorDiv, 'Wrong format, numbers only');
     }else{
-        // borrando espacios ingresados por el usuario, agregando espacios cada 4 digitos, y borrando el espacio final
+        
         numberInput.value = numberInput.value.replace(/\s/g, '').replace(/([0-9]{4})/g, '$1 ').trim();
         showError(numberInput, numberErrorDiv, '', false);
     }
 
-    Updating the card
+// Updating the card
     numberCard.innerText = numberInput.value;
 
-    // Ahowing 0s by default 
+    // showing 0s by default 
     if(numberInput.value == ''){
         numberCard.innerText = '0000 0000 0000 0000';
     }
